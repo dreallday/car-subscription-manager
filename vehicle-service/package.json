@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "faker": "^4.1.0",
     "micro": "^9.1.4",
     "microrouter": "^3.1.1"
   }
