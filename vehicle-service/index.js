@@ -11,7 +11,9 @@ for(i = 0; i < num; i++){
         id: faker.random.uuid(),
         name: faker.commerce.productName(),
         vin: faker.random.alphaNumeric(17).toUpperCase(),
-        image: faker.image.transport(150, 150)
+        image: faker.image.transport(500, 150),
+        description: faker.lorem.lines(5),
+        odometer: Math.round(Math.random() * 150000)
     });
 }
 
