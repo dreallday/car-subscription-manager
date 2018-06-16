@@ -10,6 +10,7 @@ for(i = 0; i < num; i++){
     vehicles.push({
         id: faker.random.uuid(),
         name: faker.commerce.productName(),
+        vin: faker.random.alphaNumeric(17).toUpperCase()
     });
 }
 
