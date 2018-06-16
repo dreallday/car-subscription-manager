@@ -14,7 +14,8 @@ class App extends Component {
       selected: {},
       vehicles: [],
       subscriptionLength: 7,
-      subscriptionPrice: 0
+      subscriptionPrice: 0,
+      registered: false
     };
   }
 
@@ -64,6 +65,15 @@ class App extends Component {
     })
   }
 
+  onSubscribed = (resp) => {
+    console.log(resp);
+    if(resp && resp.success && resp.vin) {
+      this.setState({
+        registered: true,
+      })
+    }
+  }
+
   renderSelected = () => {
     const { selected } = this.state;
 
@@ -73,17 +83,27 @@ class App extends Component {
 
   renderRegistration = () => {
     const { selected, subscriptionLength, subscriptionPrice } = this.state;
-    return <RegistrationComponent subscriptionLength={subscriptionLength} subscriptionPrice={subscriptionPrice} vehicle={selected} />
+    return <RegistrationComponent subscriptionLength={subscriptionLength} subscriptionPrice={subscriptionPrice} vehicle={selected} onSubscribedFn={this.onSubscribed} />
   }
 
   render() {
     console.log("render", this.state);
+    const { registered, selected, subscriptionPrice, subscriptionLength } = this.state;
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Sign Up for a Subscription!</h1>
         </header>
         <div className="container">
+        { registered == true ? 
+          <div className="row">
+            <div className="col-md-3"/>
+            <div className="col-md-6">
+              <span>Successfully started a {subscriptionLength} day subscription of {selected.name} for ${subscriptionPrice}</span>
+            </div>
+            <div className="col-md-3"/>
+          </div>
+        :
           <div className="row">
             <div className="col-md-6">
               <ul className="list-group">
@@ -95,6 +115,7 @@ class App extends Component {
               {this.renderRegistration()}
             </div>
           </div>
+          }
         </div>
       </div>
     )

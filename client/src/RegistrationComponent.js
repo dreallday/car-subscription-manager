@@ -44,7 +44,11 @@ class RegistrationComponent extends PureComponent {
           length: subscriptionLength,
           vin: vehicle.vin
       };
-      startSubscription(params);
+      startSubscription(params).then(ret => {
+          console.log(ret);
+          this.props.onSubscribedFn && this.props.onSubscribedFn(ret);
+      });
+
   }
 
   render() {

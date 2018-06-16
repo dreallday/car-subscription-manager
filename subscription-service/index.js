@@ -12,6 +12,7 @@ module.exports = router(
     send(res, 200);
   }),
   post('/', async (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const subscription = await json(req)
     // TODO: "Save" subscription
     // TODO: Return response
@@ -23,6 +24,7 @@ module.exports = router(
     let success = addSubscription(subscription);
     let resp = { success: success };
     resp["message"] = !success ? "Subscription Exists" : "ok";
+    resp["vin"] = subscription.vin;
     send(res, 200, resp)
   })
 )
