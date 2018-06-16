@@ -3,6 +3,9 @@ const { router, get } = require('microrouter')
 
 module.exports = router(
   get('/', (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    
+    console.log("req", req, req.query);
     const vin = req.query.vin
     const subscriptionLength = parseInt(req.query.subscriptionLength, 10)
 
