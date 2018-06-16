@@ -4,6 +4,7 @@ import { getAvailableVehicles } from './Helpers';
 import cx from "classnames";
 import { isEmpty } from 'lodash';
 import DetailComponent from './DetailComponent';
+import RegistrationComponent from './RegistrationComponent';
 
 class App extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class App extends Component {
     this.state = {
       loading: true,
       selected: {},
-      vehicles: []
+      vehicles: [],
+      subscriptionLength: 7
     };
   }
 
@@ -47,11 +49,22 @@ class App extends Component {
     })
   }
 
+  subscriptionLength = (length) => {
+    this.setState({
+      subscriptionLength: length
+    })
+  }
+
   renderSelected = () => {
     const { selected } = this.state;
 
-    if(isEmpty(selected)) return <span>Select a car!</span>
-    return <DetailComponent selected={selected} />
+    if(isEmpty(selected)) return
+    return <DetailComponent selected={selected} subFn={this.subscriptionLength} />
+  }
+
+  renderRegistration = () => {
+    const { selected } = this.state;
+    return <RegistrationComponent />
   }
 
   render() {
@@ -70,6 +83,7 @@ class App extends Component {
             </div>
             <div className="col-md-6">
               {this.renderSelected()}
+              {this.renderRegistration()}
             </div>
           </div>
         </div>
