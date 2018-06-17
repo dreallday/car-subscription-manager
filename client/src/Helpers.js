@@ -27,12 +27,29 @@ export const getPrice = (params) => {
     return getAPI(url)
 }
 
+export const startSubscription = (params) => {
+    const url = API + SUBSCRIPTION;
+    return postAPI(url)(params);
+}
+
 const getAPI = (url) => {
     return axios.get(url)
         .then(data => data.data) //parsing out data from axios response
-        .then(data => data)
         .catch((err) => {
             console.log("getAPI error", err);
             return [];
         });
+}
+
+const postAPI = (url) => (params) => {
+    console.log('params', params);
+    console.log('url', url);
+
+    return axios.post(url, params)
+        .then(data => data.data)
+        .catch(err => {
+            console.log("postAPI error", err);
+            return;
+        });
+        
 }
