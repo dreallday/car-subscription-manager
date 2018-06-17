@@ -1,7 +1,3 @@
-# Car Subscription Signup
-
-> Fork to another git repo. (You might not want to use your personal repo if you do not want your current employer to see this.)
-
 ## Problem
 
 Create a React frontend with a Node (micro) backend that allows a customer to create a new car subscription.
