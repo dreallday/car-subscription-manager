@@ -15,16 +15,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "proxy": {
-    "/pricing": {
-      "target": "http://localhost:3001"
-    },
-    "/subscription": {
-      "target": "http://localhost:3002"
-    },
-    "/vehicles": {
-      "target": "http://localhost:3003/vehicles"
-    }
   }
 }

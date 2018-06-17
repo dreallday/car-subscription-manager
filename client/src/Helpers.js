@@ -28,7 +28,7 @@ export const getPrice = (params) => {
 }
 
 export const startSubscription = (params) => {
-    const url = API + SUBSCRIPTION;
+    const url = API + SUBSCRIPTION + "/";
     return postAPI(url)(params);
 }
 
