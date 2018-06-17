@@ -5,15 +5,15 @@
 
 import React, { Component, PureComponent } from 'react'
 import './App.css'
-import { getPrice } from './Helpers';
-import cx from "classnames";
-import { isEmpty } from 'lodash';
+import { startSubscription } from './Helpers';
+import { isEmpty, merge } from 'lodash';
 
 
 class RegistrationComponent extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
+        subscriptionPrice: props.subscriptionPrice || 0,
         subscriptionLength: props.sl || 7,
         name: null,
         email: null,
@@ -28,23 +28,33 @@ class RegistrationComponent extends PureComponent {
 
   componentWillReceiveProps(next) {
     console.log("RegistrationComponent componentWillReceiveProps", next);
+    this.setState(merge({}, this.state, next));
   }
 
   onChange = (val) => (evt) => {
-      console.log("name", evt.target.value);
       this.setState({
           [val]: evt.target.value
       })
   }
 
+  onSubscribe = () => {
+      const { name, email, dob, subscriptionLength, vehicle } = this.state;
+      let params = {
+          name, email, dob,
+          length: subscriptionLength,
+          vin: vehicle.vin
+      };
+      startSubscription(params);
+  }
+
   render() {
-    const { name, email, dob, vehicle, subscriptionLength } = this.state;
+    const { name, email, dob, vehicle, subscriptionLength, subscriptionPrice } = this.state;
     return (
         <div className="collapse" id="collapseExample">
             <div className="card card-body">
                 <form>
                     <div className="form-group">
-                        <label htmlFor="exampleFormControlInput1">Email address</label>
+                        <label htmlFor="exampleFormControlInput1">Name</label>
                         <input type="name" className="form-control" id="exampleFormControlInput1" placeholder="name" value={name || ""} onChange={this.onChange("name")} />
                     </div>
                     <div className="form-group">
@@ -52,10 +62,11 @@ class RegistrationComponent extends PureComponent {
                         <input type="email" className="form-control" id="exampleFormControlInput2" placeholder="name@example.com" value={email || ""} onChange={this.onChange("email")} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="exampleFormControlInput3">Email address</label>
+                        <label htmlFor="exampleFormControlInput3">Date of Birth</label>
                         <input type="text" className="form-control" id="exampleFormControlInput3" placeholder="MM/DD/YYYY" value={dob || ""} onChange={this.onChange("dob")} />
                     </div>
-                    <button type="button" class="btn btn-primary" onClick={() => {}} >Subscribe!</button>
+                    
+                    <button type="button" className="btn btn-primary" onClick={this.onSubscribe} >Subscribe for ${subscriptionPrice}!</button>
                 </form>
             </div>
         </div>

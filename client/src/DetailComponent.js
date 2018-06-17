@@ -25,7 +25,9 @@ class DetailComponent extends PureComponent {
 
   componentWillReceiveProps(next) {
     console.log("DetailComponent componentWillReceiveProps", next);
-    this.fetchPrice(next)
+    if(this.props.selected != next.selected){
+        this.fetchPrice(next)
+    }
   }
 
   fetchPrice = (props = this.props, sl = this.state.subscriptionLength) => {
@@ -33,10 +35,11 @@ class DetailComponent extends PureComponent {
         vin: props.selected.vin,
         subscriptionLength: sl
     }
-
+ 
     getPrice(params).then(price => {
-        console.log("price", price);
+        console.log("priiicee", price);
         this.setState(price);
+        this.props.onPriceFn && this.props.onPriceFn(price.price);
     })
   }
 
@@ -45,8 +48,7 @@ class DetailComponent extends PureComponent {
     this.setState({
         subscriptionLength: subscriptionLength
     });
-
-    this.props.sunFn && this.props.sunFn(subscriptionLength)
+    this.props.subFn && this.props.subFn(subscriptionLength)
   }
 
   render() {

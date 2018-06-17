@@ -13,7 +13,8 @@ class App extends Component {
       loading: true,
       selected: {},
       vehicles: [],
-      subscriptionLength: 7
+      subscriptionLength: 7,
+      subscriptionPrice: 0
     };
   }
 
@@ -49,9 +50,17 @@ class App extends Component {
     })
   }
 
-  subscriptionLength = (length) => {
+  saveLength = (length) => {
+    console.log("length", length);
     this.setState({
       subscriptionLength: length
+    })
+  }
+
+  savePrice = (price) => {
+    console.log("price", price);
+    this.setState({
+      subscriptionPrice: price
     })
   }
 
@@ -59,12 +68,12 @@ class App extends Component {
     const { selected } = this.state;
 
     if(isEmpty(selected)) return
-    return <DetailComponent selected={selected} subFn={this.subscriptionLength} />
+    return <DetailComponent selected={selected} subFn={this.saveLength} onPriceFn={this.savePrice} />
   }
 
   renderRegistration = () => {
-    const { selected } = this.state;
-    return <RegistrationComponent />
+    const { selected, subscriptionLength, subscriptionPrice } = this.state;
+    return <RegistrationComponent subscriptionLength={subscriptionLength} subscriptionPrice={subscriptionPrice} vehicle={selected} />
   }
 
   render() {
